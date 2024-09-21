@@ -27,8 +27,8 @@ float Bullet::getRotation() const
 
 void Bullet::setCenter(float deltaR)
 {
-    float x = (getRadius() + CANNON_BARREL + deltaR) * cos(getRotation() * PI / 180);
-    float y = SCREEN_HEIGHT / 2 + (getRadius() + CANNON_BARREL + deltaR) * sin(getRotation() * PI / 180);
+    float x = (getRadius() + CANNON_BARREL + deltaR) * cos(getRotation());
+    float y = SCREEN_HEIGHT / 2 + (getRadius() + CANNON_BARREL + deltaR) * sin(getRotation());
     center = {x, y};
 }
 
@@ -49,6 +49,5 @@ bool Bullet::isOutsideWindow()
         return true;
     }
     
-
     return false;
 }

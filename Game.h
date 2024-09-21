@@ -11,10 +11,11 @@ class Game
     void updateGame();
     void drawGame();
     void unloadGame();
-    float shotAngle = -45.0f;
-    float initialDeltaR = 0;  
+    float shotAngle = INITIAL_FLOAT_VALUE;
+    float initialDeltaR = INITIAL_FLOAT_VALUE;  
     Cannon cannon;
     Bullet bullet;
+    bool inShot = false;
 
 public:
     void startGame();

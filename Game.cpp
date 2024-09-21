@@ -6,16 +6,29 @@ void Game::initGame()
 
 void Game::updateGame()
 {
-    if (bullet.isOutsideWindow())
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
-        initialDeltaR = 0.0f;
-    }
-    else
-    {
-        initialDeltaR += 10;
+        Vector2 clickPosition = GetMousePosition();
+        shotAngle = atan((clickPosition.y - SCREEN_HEIGHT / 2) / clickPosition.x);
+        inShot = true;
+        initialDeltaR = INITIAL_FLOAT_VALUE;
+        bullet.setRotation(shotAngle);
+        cannon.setRotation(shotAngle);
     }
 
-    (this->bullet).setCenter(initialDeltaR);
+    if (inShot)
+    {
+        if (bullet.isOutsideWindow())
+        {
+            inShot = false;
+            bullet.setCenter(INITIAL_FLOAT_VALUE);
+        }
+        else
+        {
+            initialDeltaR += 10;
+            bullet.setCenter(initialDeltaR);
+        }
+    }
 }
 
 void Game::drawGame()
@@ -25,8 +38,10 @@ void Game::drawGame()
     ClearBackground(WHITE);
 
     cannon.draw();
-    bullet.draw();
-
+    if (inShot)
+    {
+        bullet.draw();
+    }
     EndDrawing();
 }
 
@@ -54,6 +69,6 @@ void Game::startGame()
 
 Game::Game(Cannon cannon, Bullet bullet) : cannon{cannon}, bullet{bullet}
 {
-    (this->cannon).setRotation(0);
-    (this->bullet).setRotation(0);
+    (this->cannon).setRotation(shotAngle);
+    (this->bullet).setRotation(shotAngle);
 }

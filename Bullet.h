@@ -6,7 +6,7 @@
 
 class Bullet
 {
-    float radius = 60.0f;
+    float radius = BULLET_RADIUS;
     Vector2 center;
     float rotation;
 
