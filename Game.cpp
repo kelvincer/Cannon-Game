@@ -6,6 +6,25 @@ void Game::initGame()
 
 void Game::updateGame()
 {
+    if (barrier.hasReachedBottomBorder())
+    {
+        barrier.setDirection(Direction::UP);
+    }
+    else if (barrier.hasReachedTopBorder())
+    {
+        barrier.setDirection(Direction::DOWN);
+    }
+
+    switch (barrier.getDirection())
+    {
+    case Direction::UP:
+        barrier.setYPosition(-10);
+        break;
+    case Direction::DOWN:
+        barrier.setYPosition(10);
+        break;
+    }
+
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
         Vector2 clickPosition = GetMousePosition();
@@ -36,7 +55,7 @@ void Game::drawGame()
     BeginDrawing();
 
     ClearBackground(WHITE);
-
+    barrier.draw();
     cannon.draw();
     if (inShot)
     {
@@ -67,7 +86,7 @@ void Game::startGame()
     CloseWindow();
 }
 
-Game::Game(Cannon cannon, Bullet bullet) : cannon{cannon}, bullet{bullet}
+Game::Game(Cannon cannon, Bullet bullet, Barrier barrier) : cannon{cannon}, bullet{bullet}, barrier{barrier}
 {
     (this->cannon).setRotation(shotAngle);
     (this->bullet).setRotation(shotAngle);

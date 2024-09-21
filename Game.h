@@ -1,9 +1,8 @@
 #pragma once
 
-#include "raylib.h"
 #include "Cannon.h"
 #include "Bullet.h"
-#include "Constants.h"
+#include "Barrier.h"
 
 class Game
 {
@@ -15,9 +14,10 @@ class Game
     float initialDeltaR = INITIAL_FLOAT_VALUE;  
     Cannon cannon;
     Bullet bullet;
+    Barrier barrier;
     bool inShot = false;
 
 public:
+    Game(Cannon cannon, Bullet bullet, Barrier barrier);
     void startGame();
-    Game(Cannon cannon, Bullet bullet);
 };

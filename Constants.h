@@ -6,5 +6,6 @@ inline constexpr char WINDOW_TITLE[] = "Cannon";
 inline constexpr float CANNON_BARREL = 60.0f;
 inline constexpr float INITIAL_FLOAT_VALUE = 0.0;
 inline constexpr float BULLET_RADIUS = 30.0;
+inline constexpr float BARRIER_WIDTH = 15.0;
 
-//#define WINDOW_TITLE "Cannon"
+// #define WINDOW_TITLE "Cannon"
