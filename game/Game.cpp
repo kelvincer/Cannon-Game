@@ -6,23 +6,11 @@ void Game::initGame()
 
 void Game::updateGame()
 {
-    if (barrier.hasReachedBottomBorder())
-    {
-        barrier.setDirection(Direction::UP);
-    }
-    else if (barrier.hasReachedTopBorder())
-    {
-        barrier.setDirection(Direction::DOWN);
-    }
+    moveBarrier(barrier);
 
-    switch (barrier.getDirection())
+    for (auto it = objectives.begin(); it != objectives.end(); it++)
     {
-    case Direction::UP:
-        barrier.setYPosition(-10);
-        break;
-    case Direction::DOWN:
-        barrier.setYPosition(10);
-        break;
+        moveBarrier(*it);
     }
 
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -57,15 +45,42 @@ void Game::drawGame()
     ClearBackground(WHITE);
     barrier.draw();
     cannon.draw();
+
+    for (auto it = objectives.begin(); it != objectives.end(); it++)
+        (*it).draw();
+
     if (inShot)
     {
         bullet.draw();
     }
+
     EndDrawing();
 }
 
 void Game::unloadGame()
 {
+}
+
+void Game::moveBarrier(Barrier &barrier)
+{
+    if (barrier.hasReachedBottomBorder())
+    {
+        barrier.setDirection(Direction::UP);
+    }
+    else if (barrier.hasReachedTopBorder())
+    {
+        barrier.setDirection(Direction::DOWN);
+    }
+
+    switch (barrier.getDirection())
+    {
+    case Direction::UP:
+        barrier.setYPosition(-10);
+        break;
+    case Direction::DOWN:
+        barrier.setYPosition(10);
+        break;
+    }
 }
 
 void Game::startGame()
@@ -86,7 +101,7 @@ void Game::startGame()
     CloseWindow();
 }
 
-Game::Game(Cannon cannon, Bullet bullet, Barrier barrier) : cannon{cannon}, bullet{bullet}, barrier{barrier}
+Game::Game(Cannon cannon, Bullet bullet, Barrier barrier, std::list<Barrier> objectives) : cannon{cannon}, bullet{bullet}, barrier{barrier}, objectives{objectives}
 {
     (this->cannon).setRotation(shotAngle);
     (this->bullet).setRotation(shotAngle);
