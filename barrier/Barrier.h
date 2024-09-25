@@ -1,8 +1,8 @@
 #pragma once
 
 #include "raylib.h"
-#include "Constants.h"
-#include "Direction.h"
+#include "../Constants.h"
+#include "../Direction.h"
 
 class Barrier
 {

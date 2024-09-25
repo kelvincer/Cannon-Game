@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 #include "raymath.h"
-#include "Constants.h"
+#include "../Constants.h"
 
 class Bullet
 {

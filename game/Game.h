@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Cannon.h"
-#include "Bullet.h"
-#include "Barrier.h"
+#include "../cannon/Cannon.h"
+#include "../bullet/Bullet.h"
+#include "../barrier/Barrier.h"
 
 class Game
 {
