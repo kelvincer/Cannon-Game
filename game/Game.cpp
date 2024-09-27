@@ -2,6 +2,7 @@
 
 void Game::initGame()
 {
+    SetTraceLogLevel(LOG_DEBUG);
 }
 
 void Game::updateGame()
@@ -100,7 +101,6 @@ void Game::startGame()
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE); // prepare window
     initGame();                                            // load sounds and initialize game elements and variables
     SetTargetFPS(60);
-    SetTraceLogLevel(LOG_DEBUG);
     // target animation frame rate
 
     // main game loop
