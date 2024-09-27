@@ -1,23 +1,28 @@
 #include "Barrier.h"
 
-int Barrier::getHeight()
+int Barrier::getHeight() const
 {
     return height;
 }
 
-int Barrier::getWidth()
+int Barrier::getWidth() const
 {
     return width;
 }
 
-Vector2 Barrier::getPosition()
+Vector2 Barrier::getPosition() const
 {
     return position;
 }
 
-Color Barrier::getColor()
+Color Barrier::getColor() const
 {
     return color;
+}
+
+bool Barrier::operator==(const Barrier &b) const
+{
+    return this->getPosition().x == b.getPosition().x;
 }
 
 Barrier::Barrier(int height, Vector2 position, Color color) : height{height}, position{position}, color{color}
@@ -31,7 +36,7 @@ void Barrier::draw()
 
 void Barrier::setYPosition(float displacement)
 {
-    position.y += displacement ;
+    position.y += displacement;
 }
 
 bool Barrier::hasReachedTopBorder()
@@ -57,6 +62,11 @@ bool Barrier::hasReachedBottomBorder()
 void Barrier::setDirection(Direction direction)
 {
     this->direction = direction;
+}
+
+Rectangle Barrier::getRectangle()
+{
+    return Rectangle(position.x, position.y, width, height);
 }
 
 Direction Barrier::getDirection()

@@ -23,6 +23,18 @@ void Game::updateGame()
         cannon.setRotation(shotAngle);
     }
 
+    for (auto &barrier : objectives)
+    {
+        if (CheckCollisionCircleRec(bullet.getCenter(), 25, barrier.getRectangle()))
+        {
+            explodedBarrier = barrier;
+            TraceLog(LOG_DEBUG, "plow");
+            break;
+        }
+    }
+
+    objectives.remove(explodedBarrier);
+
     if (inShot)
     {
         if (bullet.isOutsideWindow())
@@ -88,6 +100,7 @@ void Game::startGame()
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE); // prepare window
     initGame();                                            // load sounds and initialize game elements and variables
     SetTargetFPS(60);
+    SetTraceLogLevel(LOG_DEBUG);
     // target animation frame rate
 
     // main game loop

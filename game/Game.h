@@ -19,6 +19,7 @@ class Game
     Barrier barrier;
     std::list<Barrier> objectives;
     bool inShot = false;
+    Barrier explodedBarrier;
 
 public:
     Game(Cannon cannon, Bullet bullet, Barrier barrier, std::list<Barrier> objectives);

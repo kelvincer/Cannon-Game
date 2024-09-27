@@ -6,10 +6,10 @@
 
 class Barrier
 {
-    int getHeight();
-    int getWidth();
-    Vector2 getPosition();
-    Color getColor();
+    int getHeight() const;
+    int getWidth() const;
+    Vector2 getPosition() const;
+    Color getColor() const;
 
     int height;
     int width = BARRIER_WIDTH;
@@ -20,11 +20,14 @@ class Barrier
     Direction direction = Direction::DOWN;
 
 public:
+    Barrier() = default;
     Barrier(int height, Vector2 position, Color color);
     void draw();
     void setYPosition(float y);
     bool hasReachedTopBorder();
     bool hasReachedBottomBorder();
     void setDirection(Direction direction);
+    Rectangle getRectangle();
     Direction getDirection();
+    bool operator==(const Barrier &b) const;
 };
