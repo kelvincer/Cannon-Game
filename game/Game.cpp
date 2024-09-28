@@ -7,11 +7,16 @@ void Game::initGame()
 
 void Game::updateGame()
 {
-    moveBarrier(barrier);
+    moveBarrier(shieldBarrier, 25);
 
     for (auto it = objectives.begin(); it != objectives.end(); it++)
     {
-        moveBarrier(*it);
+        moveBarrier(*it, 13);
+    }
+
+    if (CheckCollisionCircleRec(bullet.getCenter(), BULLET_RADIUS, shieldBarrier.getRectangle()))
+    {
+        relocateBullet();
     }
 
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -26,26 +31,23 @@ void Game::updateGame()
 
     for (auto &barrier : objectives)
     {
-        if (CheckCollisionCircleRec(bullet.getCenter(), 25, barrier.getRectangle()))
+        if (CheckCollisionCircleRec(bullet.getCenter(), BULLET_RADIUS, barrier.getRectangle()))
         {
-            explodedBarrier = barrier;
-            TraceLog(LOG_DEBUG, "plow");
+            objectives.remove(barrier);
+            relocateBullet();
             break;
         }
     }
-
-    objectives.remove(explodedBarrier);
 
     if (inShot)
     {
         if (bullet.isOutsideWindow())
         {
-            inShot = false;
-            bullet.setCenter(INITIAL_FLOAT_VALUE);
+            relocateBullet();
         }
         else
         {
-            initialDeltaR += 10;
+            initialDeltaR += bulletDeltaR;
             bullet.setCenter(initialDeltaR);
         }
     }
@@ -56,7 +58,7 @@ void Game::drawGame()
     BeginDrawing();
 
     ClearBackground(WHITE);
-    barrier.draw();
+    shieldBarrier.draw();
     cannon.draw();
 
     for (auto it = objectives.begin(); it != objectives.end(); it++)
@@ -74,7 +76,7 @@ void Game::unloadGame()
 {
 }
 
-void Game::moveBarrier(Barrier &barrier)
+void Game::moveBarrier(Barrier &barrier, float deltaY)
 {
     if (barrier.hasReachedBottomBorder())
     {
@@ -88,12 +90,18 @@ void Game::moveBarrier(Barrier &barrier)
     switch (barrier.getDirection())
     {
     case Direction::UP:
-        barrier.setYPosition(-10);
+        barrier.setYPosition(-deltaY);
         break;
     case Direction::DOWN:
-        barrier.setYPosition(10);
+        barrier.setYPosition(deltaY);
         break;
     }
+}
+
+void Game::relocateBullet()
+{
+    inShot = false;
+    bullet.setCenter(INITIAL_FLOAT_VALUE);
 }
 
 void Game::startGame()
@@ -114,7 +122,7 @@ void Game::startGame()
     CloseWindow();
 }
 
-Game::Game(Cannon cannon, Bullet bullet, Barrier barrier, std::list<Barrier> objectives) : cannon{cannon}, bullet{bullet}, barrier{barrier}, objectives{objectives}
+Game::Game(Cannon cannon, Bullet bullet, Barrier barrier, std::list<Barrier> objectives) : cannon{cannon}, bullet{bullet}, shieldBarrier{barrier}, objectives{objectives}
 {
     (this->cannon).setRotation(shotAngle);
     (this->bullet).setRotation(shotAngle);

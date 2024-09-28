@@ -11,15 +11,16 @@ class Game
     void updateGame();
     void drawGame();
     void unloadGame();
-    void moveBarrier(Barrier &barrier);
+    void moveBarrier(Barrier &barrier, float deltaY);
+    void relocateBullet();
     float shotAngle = INITIAL_FLOAT_VALUE;
     float initialDeltaR = INITIAL_FLOAT_VALUE;
     Cannon cannon;
     Bullet bullet;
-    Barrier barrier;
+    Barrier shieldBarrier;
     std::list<Barrier> objectives;
     bool inShot = false;
-    Barrier explodedBarrier;
+    const float bulletDeltaR = 15;
 
 public:
     Game(Cannon cannon, Bullet bullet, Barrier barrier, std::list<Barrier> objectives);
